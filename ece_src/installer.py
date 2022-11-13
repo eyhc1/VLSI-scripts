@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# install a package without the use of sudo rpm install <PACKAGE>. Instead can just use
+#./installer.py install <PACAGE> <OPTIONAL_ARG> to install a package locally
+
 import os, sys
 
 if len(sys.argv) < 3 or "install" not in sys.argv:
