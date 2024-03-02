@@ -1,5 +1,5 @@
-# EE476-scripts
-Some small helper scripts for UW EE476 VLSI I. Along with a few other scripts/programs for the department's linux's server.
+# UWEE scripts
+Some small helper scripts for UW's VLSI courses. Along with a few other scripts/programs for the department's linux's server.
 
 ### Still under construciton....
 
