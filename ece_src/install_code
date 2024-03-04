@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Set the version of VSCode. If you want different version, just change this line
+code_version="1.82.3"
+
+# Define the source file and target directory
+target_dir="$HOME/bin"
+
+# Check if $HOME/bin directory exists, if not, create it
+if [ ! -d "$target_dir" ]; then
+    mkdir -p "$target_dir"
+    echo "Created $target_dir"
+fi
+
+# check if the directory exist, if yes, delete it and then create it
+if [ -d "code" ]; then
+    rm -rf "code"
+fi
+mkdir code
+cd code
+
+# Download VSCode
+curl -L -o code.rpm "https://update.code.visualstudio.com/$code_version/linux-rpm-x64/stable"
+rpm2cpio code.rpm | cpio -idv
+
+rm -rf code.rpm
+
+# correct permissions
+cd usr/share/code
+chmod +x code
+cd bin
+chmod +x code
+
+# Since we don't have sudo, modify a line of the Chromium backend to allow non-roots to run
+sed -i 's/\(ELECTRON_RUN_AS_NODE=1 "$ELECTRON" "$CLI" --ms-enable-electron-run-as-node\)/\1 --no-sandbox/' code
+
+# create shortcut to user's bin folder, which by default is already something in PATH
+# but first, check if the link already exists, if yes, delete it
+if [ -L "$target_dir/code" ]; then
+    rm -rf "$target_dir/code"
+fi
+ln -s $PWD/code $target_dir/code
+
+# Make sure the linked one also has perm
+chmod +x $target_dir/code

@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Define the source file and target directory
+target_dir="$HOME/bin"
+
+# Check if $HOME/bin directory exists, if not, create it
+if [ ! -d "$target_dir" ]; then
+    mkdir -p "$target_dir"
+    echo "Created $target_dir"
+fi
+
+# check if chrome directory exist, if yes, delete it and then create it
+if [ -d "chrome" ]; then
+    rm -rf "chrome"
+fi
+
+mkdir chrome
+cd chrome
+
+# Download Chrome
+curl -L -o chrome.rpm "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
+
+rpm2cpio chrome.rpm | cpio -idv
+
+rm -rf chrome.rpm
+
+# correct permissions
+cd opt/google/chrome
+chmod +x google-chrome
+
+# Since we don't have sudo, modify a line of the Chromium backend to allow non-roots to run
+sed -i 's/\(exec -a "$0" "$HERE\/chrome"\)/\1 --no-sandbox --user-data-dir=\/tmp\/google-chrome\/$HOSTNAME$DISPLAY/' google-chrome
+
+# create shortcut to user's bin folder, which by default is already something in PATH, so that we can run it from anywhere
+# but first, check if the link already exists, if yes, delete it
+if [ -L "$target_dir/chrome" ]; then
+    rm -rf "$target_dir/chrome"
+fi
+ln -s $PWD/google-chrome $target_dir/chrome
+
+# Make sure the linked one also has perm
+chmod +x $target_dir/chrome
