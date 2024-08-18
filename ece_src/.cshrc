@@ -1,4 +1,4 @@
-# set up environment variables, aliases, and function
+# set up environment variables, aliases, and function for tcsh shell
 
 # Change EDA_TOOLS_PATH to the location of the EDA tools
 setenv EDA_TOOLS_PATH /home/lab.apps/vlsiapps_new
