@@ -4,7 +4,7 @@
 setenv EDA_TOOLS_PATH /home/lab.apps/vlsiapps_new
 setenv EDA_CSHRC_PATH ${EDA_TOOLS_PATH}/cshrc
 
-source ${EDA_CSHRC_PATH}/general.cshrc
+source ${EDA_TOOLS_PATH}/cshrc/source_me.cshrc
 # Any other tool specific environments (.cshrc files) can be set here..
 
 
