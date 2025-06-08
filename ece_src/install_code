@@ -20,7 +20,8 @@ mkdir code
 cd code
 
 # Download VSCode
-curl -L -o code.rpm "https://update.code.visualstudio.com/$code_version/linux-rpm-x64/stable"
+# curl -L -o code.rpm "https://update.code.visualstudio.com/$code_version/linux-rpm-x64/stable"
+curl -L -o code.rpm "https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64"
 rpm2cpio code.rpm | cpio -idv
 
 rm -rf code.rpm
